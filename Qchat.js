@@ -29,7 +29,7 @@ input.addEventListener("change", function(evt) {
 })
 
 //获取昵称&正文&时间 并 调用appendDiv()生成一块对话div
-//TODO 昵称下拉框
+//TODO 昵称下拉框 自定义字体
 
 function submitForm(){
     var messageIn = document.getElementById("message").value;
@@ -45,24 +45,13 @@ function submitForm(){
         messageIn = messageIn.replace(/[\r\n]/g,"<br />");
         appendDiv(idIn,messageIn,timeIn);
         if (emoIn != null){
-            //去掉"emo-preview" id
+            //去掉"emo-preview" id防止被删
             $(emoIn).removeAttr("id");
-            //使用easyloader加载resizable模块使用到的相关js和css样式
-            easyloader.load('resizable',function(){
-            //创建对象
-                //偷个懒直接把所有img加上缩放
-                $("img").resizable({
-                    maxWidth:400,
-                    maxHeight:300
-                })
-            });
-            //插到p里面
             $("#main div:last").children("p").append(emoIn);
         }
 
         var idColour = $("input[name=idColour]:checked").val();
         //alert(idColour);
-        //选中main末尾的div中的h3，把color改成green
         if (idColour == "green") {
             $("#main div:last>h3").css("color","green");
         }
@@ -87,6 +76,8 @@ function appendDiv(id,message,time){
     $("<p>"+message+"</p>").appendTo(newDiv);
     //添加在main末尾
     mainDiv.append(newDiv);
+    //触发设定img为缩放的function
+    $("#main").trigger("contentchanged")
 }
 
 //重置（表格）
@@ -95,9 +86,28 @@ window.reset = function (e) {
     e.wrap('<form>').closest('form').get(0).reset();
     e.unwrap();
 }
-//清除File input和末尾的<img>
+
 //然而id重复的时候只会清理掉第一个img
 function clearEmo(){
     reset($("#emo_upload"));
     $("#emo-preview").remove();
 }
+//直接往文本框里面插<img>
+function insertLink(){
+    var textTag = "<img src='"+$("#img_link").val()+"' alt='linkImg'>";
+    $("#message").val($("#message").val() + textTag);
+    $("#img_link").val("");
+}
+
+$(document).on("contentchanged", "#main", function() {
+  // do something after the div content has changed
+  //使用easyloader加载resizable模块使用到的相关js和css样式
+    easyloader.load('resizable',function(){
+    //创建对象
+    //偷个懒直接把所有img加上缩放
+    $("img").resizable({
+        maxWidth:400,
+        maxHeight:300
+        })
+    });
+});
