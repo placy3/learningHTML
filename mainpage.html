@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"> 
+    <title>伪QQ聊天记录</title>
+    <link type="text/css" rel="stylesheet" href="Qchat.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+    <!-- 导入EasyUI -->
+    <script src="jquery-easyui-1.5.1/easyloader.js"></script>
+    <!-- 自己的 -->
+    <script src="Qchat.js"></script>
+<!--     <script type="text/javascript">
+      $(function(){
+          //使用easyloader加载resizable模块使用到的相关js和css样式
+          easyloader.load('resizable',function(){
+                //创建对象
+                $('#t').resizable({})
+            });
+      });
+    </script> -->
+ </head>
+<body>
+<!--     <nav>
+        这个是导航栏
+        <a href="#">要咩导航栏啊</a>
+    </nav> -->
+    <div id="main">
+    <div>
+        <h3 class="green">用户1昵称&emsp;
+        <span>插入时间的地方</span>
+        </h3>
+        <p>正文</p>
+    </div>
+
+    <div>
+        <h3>昵称2&emsp;
+            <span>22:12</span></h3>
+        <p>另一段消息</p>
+    </div>
+    </div>
+<!--     范例完，然后来写表单+js吧 -->
+    <div id="field">
+    <form onsubmit="return submitForm()">
+        <!-- 返回值为false，阻止页面刷新并手动清空表单数据 -->
+        <input type="radio" name="idColour" value="blue" checked="checked">蓝色
+        <input type="radio" name="idColour" value="green">绿色
+        <br/>
+        <input type="text" name="user_id" id="user_id" placeholder="昵称">
+        <br/>
+        <textarea id="message" placeholder="内容"></textarea>
+        <input id="time" class="easyui-timespinner" value="12:30:30"
+        data-options="showSeconds:true">
+        <br/>
+        <input type="file" id="emo_upload">
+        <button type="submit">走你</button>
+    </form>
+    <button id="clearEmo" onclick="clearEmo()">传错了</button>
+    </div>
+</body>

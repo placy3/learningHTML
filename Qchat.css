@@ -1,0 +1,27 @@
+/*div{
+    border: 2px solid black;
+}
+*/
+/*h3默认为蓝字*/
+h3{
+    text-indent: 5px;
+    font-family: SimSun, "宋体";
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0;
+    color: blue;
+}
+/*范例用*/
+.green{
+    color: green;
+}
+/*TODO: 自定义样式*/
+#main p{
+    font-family: Helvetica, Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
+    padding: 5px 5px 5px 10px;
+    margin: auto;
+}
+img:hover{
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
