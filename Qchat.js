@@ -17,7 +17,6 @@ input.addEventListener("change", function(evt) {
         }
 
         //在body末尾生成预览
-        //TODO 按submit按钮的时候把这个移到正文里去
         var img = document.createElement("img");
             img.id = "emo-preview"
         document.body.appendChild(img);
@@ -31,7 +30,7 @@ input.addEventListener("change", function(evt) {
 
 //获取昵称&正文&时间 并 调用appendDiv()生成一块对话div
 //TODO 昵称下拉框
-//表情包就再说啦
+
 function submitForm(){
     var messageIn = document.getElementById("message").value;
     var idIn = document.getElementById("user_id").value;
@@ -51,14 +50,14 @@ function submitForm(){
             //使用easyloader加载resizable模块使用到的相关js和css样式
             easyloader.load('resizable',function(){
             //创建对象
-                //偷个懒直接把所有img加上缩放了
+                //偷个懒直接把所有img加上缩放
                 $("img").resizable({
                     maxWidth:400,
                     maxHeight:300
                 })
             });
-
-            $("#main div:last").append(emoIn);
+            //插到p里面
+            $("#main div:last").children("p").append(emoIn);
         }
 
         var idColour = $("input[name=idColour]:checked").val();
@@ -97,6 +96,7 @@ window.reset = function (e) {
     e.unwrap();
 }
 //清除File input和末尾的<img>
+//然而id重复的时候只会清理掉第一个img
 function clearEmo(){
     reset($("#emo_upload"));
     $("#emo-preview").remove();
