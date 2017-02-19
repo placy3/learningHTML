@@ -91,6 +91,7 @@ function appendDiv(id,message,time){
 }
 
 //重置（表格）
+//这段出自StackOverFlow
 window.reset = function (e) {
     e.wrap('<form>').closest('form').get(0).reset();
     e.unwrap();
@@ -100,14 +101,3 @@ function clearEmo(){
     reset($("#emo_upload"));
     $("#emo-preview").remove();
 }
-// function makeResizable(){
-// //使用easyloader加载resizable模块使用到的相关js和css样式
-//     easyloader.load('resizable',function(){
-//         //创建对象
-//         $("div").each(function(){
-//             $(this).resizable({
-
-//             })
-//         })
-//     });
-// }
