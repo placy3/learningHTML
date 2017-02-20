@@ -47,13 +47,13 @@ function submitForm(){
         if (emoIn != null){
             //去掉"emo-preview" id防止被删
             $(emoIn).removeAttr("id");
-            $("#main div:last").children("p").append(emoIn);
+            $("#main>div:last>p").append(emoIn);
         }
 
         var idColour = $("input[name=idColour]:checked").val();
         //alert(idColour);
         if (idColour == "green") {
-            $("#main div:last>h3").css("color","green");
+            $("#main>div:last>h3").css("color","green");
         }
         // $("#message").val("");
         reset($("#emo_upload"));
