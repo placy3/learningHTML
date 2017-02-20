@@ -20,13 +20,8 @@ h3{
     font-family: Helvetica, Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
     padding: 5px 5px 5px 10px;
     margin: auto;
-    min-height: 1em;
 }
 img:hover{
     border-right: 1px solid gray;
     border-bottom: 1px solid gray;
-}
-
-.over{
-    background:#FBEC88;
 }
