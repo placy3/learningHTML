@@ -27,6 +27,12 @@ img:hover{
     border-bottom: 1px solid gray;
 }
 
+.dBox{
+    height: 100px;
+    width: 100px;
+    border: 2px dotted black;
+}
+
 .over{
     background:#FBEC88;
 }

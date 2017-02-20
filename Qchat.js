@@ -1,5 +1,20 @@
 'use strict';
 
+//简单的点X删除功能
+//TODO: 撤销一次操作
+function toggleDelete(){
+    if (!$("#deleteMode").linkbutton("options").selected) {
+        $("<span class='cross'>X</span>").insertBefore($("#main>div"));
+        $(".cross").click(function(){
+            $(this).next("div").remove();
+            $(this).append($("<br/>"));
+        });
+    }else{
+        $(".cross").remove();
+    }
+    ;
+};
+
 //图片上传预览（伪）
 $(document).ready(function(){
 var input = document.getElementById("emo_upload");
@@ -110,17 +125,14 @@ using(JEUIplugins,function(){
     $("img").draggable({
                 revert: true,
                 //防止拖动边缘触发缩放
-                edge: 8,
-                cursor: 'auto',
+                edge: 6,
+                cursor: 'move',
                 onStartDrag:function(){
                     $(this).draggable('options').cursor='not-allowed';
-                    //TODO 在p内增加可选位置（虚线框）
-                },
-                onDrag: function(){
-                    //console.log($(this).draggable('options'));
                 },
                 onStopDrag:function(){
                     $(this).draggable('options').cursor='auto';
+                    $(".dBox").remove();
                 }
             }).resizable({
                 maxWidth:500,
@@ -128,6 +140,9 @@ using(JEUIplugins,function(){
             });
     $("p").droppable({
                 accept: "img",
+                // onDragOver:function(e,source){
+                //     console.log("OVER");
+                // },
                 onDragEnter:function(e,source){
                     $(source).draggable('options').cursor='auto';
                     $(this).addClass('over');
@@ -137,13 +152,35 @@ using(JEUIplugins,function(){
                     $(this).removeClass('over');
                 },
                 onDrop:function(e,source){
-                    // console.log($(this).droppable('options'));
                     $(this).append(source)
                     $(this).removeClass('over');
                 }
             })
 
+    // //问题是什么时候触发
+    // function dottedBox(){
+    //     // var dropBox=$("<div class='dBox'></div>")
+    //     // dropBox.appendTo("p");
+    //     $(".dBox").droppable({
+    //             accept: "img",
+    //             onDragEnter:function(e,source){
+    //                 $(source).draggable('options').cursor='auto';
+    //                 $(this).addClass('over');
+    //                 console.log("Enter");
+    //             },
+    //             onDragLeave:function(e,source){
+    //                 $(source).draggable('options').cursor='not-allowed';
+    //                 $(this).removeClass('over');
+    //                 console.log("Leave");
+    //             },
+    //             onDrop:function(e,source){
+    //                 // console.log($(this).droppable('options'));
+    //                 $(this).after(source)
+    //                 $(this).removeClass('over');
+    //                 console.log("Dropped");
+    //             }
+    //         });
+    // };
+//下面两个千万别动
     });
-
-
 });
