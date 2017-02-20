@@ -17,7 +17,6 @@ input.addEventListener("change", function(evt) {
         }
 
         //在body末尾生成预览
-        //TODO 按submit按钮的时候把这个移到正文里去
         var img = document.createElement("img");
             img.id = "emo-preview"
         document.body.appendChild(img);
@@ -30,8 +29,8 @@ input.addEventListener("change", function(evt) {
 })
 
 //获取昵称&正文&时间 并 调用appendDiv()生成一块对话div
-//TODO 昵称下拉框
-//表情包就再说啦
+//TODO 昵称下拉框 自定义字体
+
 function submitForm(){
     var messageIn = document.getElementById("message").value;
     var idIn = document.getElementById("user_id").value;
@@ -46,24 +45,13 @@ function submitForm(){
         messageIn = messageIn.replace(/[\r\n]/g,"<br />");
         appendDiv(idIn,messageIn,timeIn);
         if (emoIn != null){
-            //去掉"emo-preview" id
+            //去掉"emo-preview" id防止被删
             $(emoIn).removeAttr("id");
-            //使用easyloader加载resizable模块使用到的相关js和css样式
-            easyloader.load('resizable',function(){
-            //创建对象
-                //偷个懒直接把所有img加上缩放了
-                $("img").resizable({
-                    maxWidth:400,
-                    maxHeight:300
-                })
-            });
-
-            $("#main div:last").append(emoIn);
+            $("#main div:last").children("p").append(emoIn);
         }
 
         var idColour = $("input[name=idColour]:checked").val();
         //alert(idColour);
-        //选中main末尾的div中的h3，把color改成green
         if (idColour == "green") {
             $("#main div:last>h3").css("color","green");
         }
@@ -88,26 +76,74 @@ function appendDiv(id,message,time){
     $("<p>"+message+"</p>").appendTo(newDiv);
     //添加在main末尾
     mainDiv.append(newDiv);
+    //触发设定img为缩放的function
+    $("#main").trigger("newDivAdded")
 }
 
 //重置（表格）
+//这段出自StackOverFlow
 window.reset = function (e) {
     e.wrap('<form>').closest('form').get(0).reset();
     e.unwrap();
 }
-//清除File input和末尾的<img>
+
+//然而id重复的时候只会清理掉第一个img
 function clearEmo(){
     reset($("#emo_upload"));
     $("#emo-preview").remove();
 }
-// function makeResizable(){
-// //使用easyloader加载resizable模块使用到的相关js和css样式
-//     easyloader.load('resizable',function(){
-//         //创建对象
-//         $("div").each(function(){
-//             $(this).resizable({
+//直接用外链生成emo-preview
+function insertLink(){
+    // var textTag = "<img src='"+$("#img_link").val()+"' alt='linkImg'>";
+    // $("#message").val($("#message").val() + textTag);
+    if ($("#img_link").val() != "") {
+        $("<img id='emo-preview' src='"+
+            $("#img_link").val()+"'>").appendTo("body");
+        $("#img_link").val("");
+    }
+}
 
-//             })
-//         })
-//     });
-// }
+$(document).on("newDivAdded", "#main", function() {
+    //easyloader导入模块
+var JEUIplugins = new Array("draggable","droppable","resizable");
+using(JEUIplugins,function(){
+    $("img").draggable({
+                revert: true,
+                //防止拖动边缘触发缩放
+                edge: 8,
+                cursor: 'auto',
+                onStartDrag:function(){
+                    $(this).draggable('options').cursor='not-allowed';
+                    //TODO 在p内增加可选位置（虚线框）
+                },
+                onDrag: function(){
+                    //console.log($(this).draggable('options'));
+                },
+                onStopDrag:function(){
+                    $(this).draggable('options').cursor='auto';
+                }
+            }).resizable({
+                maxWidth:500,
+                maxHeight:500,
+            });
+    $("p").droppable({
+                accept: "img",
+                onDragEnter:function(e,source){
+                    $(source).draggable('options').cursor='auto';
+                    $(this).addClass('over');
+                },
+                onDragLeave:function(e,source){
+                    $(source).draggable('options').cursor='not-allowed';
+                    $(this).removeClass('over');
+                },
+                onDrop:function(e,source){
+                    // console.log($(this).droppable('options'));
+                    $(this).append(source)
+                    $(this).removeClass('over');
+                }
+            })
+
+    });
+
+
+});
