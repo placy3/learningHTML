@@ -77,7 +77,7 @@ function appendDiv(id,message,time){
     //添加在main末尾
     mainDiv.append(newDiv);
     //触发设定img为缩放的function
-    $("#main").trigger("contentchanged")
+    $("#main").trigger("newDivAdded")
 }
 
 //重置（表格）
@@ -92,22 +92,70 @@ function clearEmo(){
     reset($("#emo_upload"));
     $("#emo-preview").remove();
 }
-//直接往文本框里面插<img>
+//直接用外链生成emo-preview
 function insertLink(){
-    var textTag = "<img src='"+$("#img_link").val()+"' alt='linkImg'>";
-    $("#message").val($("#message").val() + textTag);
-    $("#img_link").val("");
+    // var textTag = "<img src='"+$("#img_link").val()+"' alt='linkImg'>";
+    // $("#message").val($("#message").val() + textTag);
+    if ($("#img_link").val() != "") {
+        $("<img id='emo-preview' src='"+
+            $("#img_link").val()+"'>").appendTo("body");
+        $("#img_link").val("");
+    }
 }
 
-$(document).on("contentchanged", "#main", function() {
-  // do something after the div content has changed
-  //使用easyloader加载resizable模块使用到的相关js和css样式
-    easyloader.load('resizable',function(){
-    //创建对象
-    //偷个懒直接把所有img加上缩放
-    $("img").resizable({
-        maxWidth:400,
-        maxHeight:300
-        })
+$(document).on("newDivAdded", "#main", function() {
+    //easyloader导入模块
+    // using('resizable',function(){
+    // //创建对象
+    // //偷个懒直接把所有img加上缩放
+    // $("img").resizable({
+    //     maxWidth:500,
+    //     maxHeight:500
+    //     })
+    // });
+
+var JEUIplugins = new Array("draggable","droppable","resizable");
+using(JEUIplugins,function(){
+    $("img").draggable({
+                revert: true,
+                //防止拖动边缘触发缩放
+                edge: 8,
+                cursor: 'auto',
+                onStartDrag:function(){
+                    $(this).draggable('options').cursor='not-allowed';
+                    //TODO 在p内增加可选位置（虚线框）
+                },
+                onDrag: function(){
+                    console.log($(this).draggable('options'));
+                },
+                onStopDrag:function(){
+                    $(this).draggable('options').cursor='auto';
+                }
+            }).resizable({
+                maxWidth:500,
+                maxHeight:500,
+                // onResize:function(){
+                //     console.log($(this).draggable('options'));
+                // }
+            });
+    $("p").droppable({
+                accept: "img",
+                onDragEnter:function(e,source){
+                    $(source).draggable('options').cursor='auto';
+                    $(this).addClass('over');
+                },
+                onDragLeave:function(e,source){
+                    $(source).draggable('options').cursor='not-allowed';
+                    $(this).removeClass('over');
+                },
+                onDrop:function(e,source){
+                    // console.log($(this).droppable('options'));
+                    $(this).append(source)
+                    $(this).removeClass('over');
+                }
+            })
+
     });
+
+
 });
