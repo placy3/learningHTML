@@ -105,15 +105,6 @@ function insertLink(){
 
 $(document).on("newDivAdded", "#main", function() {
     //easyloader导入模块
-    // using('resizable',function(){
-    // //创建对象
-    // //偷个懒直接把所有img加上缩放
-    // $("img").resizable({
-    //     maxWidth:500,
-    //     maxHeight:500
-    //     })
-    // });
-
 var JEUIplugins = new Array("draggable","droppable","resizable");
 using(JEUIplugins,function(){
     $("img").draggable({
@@ -126,7 +117,7 @@ using(JEUIplugins,function(){
                     //TODO 在p内增加可选位置（虚线框）
                 },
                 onDrag: function(){
-                    console.log($(this).draggable('options'));
+                    //console.log($(this).draggable('options'));
                 },
                 onStopDrag:function(){
                     $(this).draggable('options').cursor='auto';
@@ -134,9 +125,6 @@ using(JEUIplugins,function(){
             }).resizable({
                 maxWidth:500,
                 maxHeight:500,
-                // onResize:function(){
-                //     console.log($(this).draggable('options'));
-                // }
             });
     $("p").droppable({
                 accept: "img",
