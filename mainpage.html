@@ -20,13 +20,13 @@
         <h3 class="green">用户1昵称&emsp;
         <span>插入时间的地方</span>
         </h3>
-        <p>正文</p>
+        <p class="Qtext">正文</p>
     </div>
 
     <div>
         <h3>昵称2&emsp;
             <span>22:12</span></h3>
-        <p>另一段消息</p>
+        <p class="Qtext">另一段消息</p>
     </div>
     </div>
 <!--     范例完，然后来写表单+js吧 -->
@@ -49,6 +49,9 @@
     <br />
     <input id="img_link" type="text" name="img_link" placeholder="外链复制到这里">
     <button onclick="insertLink()">插入外部图片</button>
-    <button id="deleteMode" onclick="toggleDelete()" class="easyui-linkbutton" data-options="toggle:true">删除开关</button>      
+    <div id="toggleButton">
+        <button id="deleteMode" onclick="toggleDelete()" class="easyui-linkbutton" data-options="toggle:true">删除开关</button>
+        <button id="dropMode" onclick="toggleImgDrop()" class="easyui-linkbutton" data-options="toggle:true">移图开关</button>
+    </div>      
     </div>
 </body>

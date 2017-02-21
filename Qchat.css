@@ -28,11 +28,24 @@ img:hover{
 }
 
 .dBox{
-    height: 100px;
-    width: 100px;
+    height: 20px;
+    width: 160px;
     border: 2px dotted black;
+    background-color: white;
 }
 
 .over{
     background:#FBEC88;
+}
+
+.cross{
+    display: block;
+    color: #ABABAB;
+    font-weight: 700;
+}
+.cross:hover{
+    background-color: #C6C6C6;
+    display: block;
+    color: white;
+    font-weight: 700;
 }

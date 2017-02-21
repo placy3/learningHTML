@@ -1,19 +1,63 @@
 'use strict';
 
-//简单的点X删除功能
-//TODO: 撤销一次操作
+//简单的点X切换可见状态功能
 function toggleDelete(){
     if (!$("#deleteMode").linkbutton("options").selected) {
-        $("<span class='cross'>X</span>").insertBefore($("#main>div"));
+        //遍历.cross元素，根据其后div是否显示而改变文字
+        function changeX(){
+            $(".cross").each(function(){
+            var followingDiv = $(this).next("div");
+            if (followingDiv.css("display") == "none") {
+                $(this).text("还原");
+            }else{
+                $(this).text("X");
+            }
+            });
+        };
+        $("<span class='cross'></span>").insertBefore($("#main>div"));
+        changeX();
         $(".cross").click(function(){
-            $(this).next("div").remove();
-            $(this).append($("<br/>"));
+            $(this).next("div").toggle();
+            changeX();
         });
-    }else{
+    }else{  //第二次按下时
         $(".cross").remove();
-    }
-    ;
+    };
 };
+
+function toggleImgDrop(){
+    if (!$("#dropMode").linkbutton("options").selected){
+        var dottedBox = $("<div class='dBox'></div>")
+        //暂时还无法做到插到文字前方
+        dottedBox.insertBefore($(".Qtext"));
+        dottedBox.insertAfter($(".Qtext"));
+        makeDropBox();
+        // console.log("droppable");
+    }else{
+        $(".dBox").remove();
+    }
+};
+
+function makeDropBox(){
+    using(JEUIplugins,function(){
+        $(".dBox").droppable({
+                accept: "img",
+                onDragEnter:function(e,source){
+                    $(source).draggable('options').cursor='auto';
+                    $(this).addClass('over');
+                },
+                onDragLeave:function(e,source){
+                    $(source).draggable('options').cursor='not-allowed';
+                    $(this).removeClass('over');
+                },
+                onDrop:function(e,source){
+                    $(this).after(source)
+                    $(this).removeClass('over');
+                }
+            });
+    });
+};
+
 
 //图片上传预览（伪）
 $(document).ready(function(){
@@ -53,9 +97,8 @@ function submitForm(){
 
     //注意这是个img标签
     var emoIn = document.getElementById("emo-preview");
+    //内容/表情包不为空时
     if (messageIn != "" || emoIn != null) {
-        //内容/表情包不为空时
-
         //所有回车转换
         messageIn = messageIn.replace(/[\r\n]/g,"<br />");
         appendDiv(idIn,messageIn,timeIn);
@@ -88,7 +131,7 @@ function appendDiv(id,message,time){
     var newh3 = $("<h3>"+id+"&emsp;</h3>");
     $("<span>"+time+"</span>").appendTo(newh3);
     newh3.appendTo(newDiv);
-    $("<p>"+message+"</p>").appendTo(newDiv);
+    $("<p class='Qtext'>"+message+"</p>").appendTo(newDiv);
     //添加在main末尾
     mainDiv.append(newDiv);
     //触发设定img为缩放的function
@@ -118,31 +161,28 @@ function insertLink(){
     }
 }
 
-$(document).on("newDivAdded", "#main", function() {
     //easyloader导入模块
 var JEUIplugins = new Array("draggable","droppable","resizable");
+$(document).on("newDivAdded", "#main", function() {
 using(JEUIplugins,function(){
     $("img").draggable({
                 revert: true,
                 //防止拖动边缘触发缩放
-                edge: 6,
+                edge: 4,
                 cursor: 'move',
                 onStartDrag:function(){
                     $(this).draggable('options').cursor='not-allowed';
                 },
                 onStopDrag:function(){
                     $(this).draggable('options').cursor='auto';
-                    $(".dBox").remove();
                 }
             }).resizable({
                 maxWidth:500,
                 maxHeight:500,
             });
-    $("p").droppable({
+
+        $("p").droppable({
                 accept: "img",
-                // onDragOver:function(e,source){
-                //     console.log("OVER");
-                // },
                 onDragEnter:function(e,source){
                     $(source).draggable('options').cursor='auto';
                     $(this).addClass('over');
@@ -155,32 +195,8 @@ using(JEUIplugins,function(){
                     $(this).append(source)
                     $(this).removeClass('over');
                 }
-            })
+            });
 
-    // //问题是什么时候触发
-    // function dottedBox(){
-    //     // var dropBox=$("<div class='dBox'></div>")
-    //     // dropBox.appendTo("p");
-    //     $(".dBox").droppable({
-    //             accept: "img",
-    //             onDragEnter:function(e,source){
-    //                 $(source).draggable('options').cursor='auto';
-    //                 $(this).addClass('over');
-    //                 console.log("Enter");
-    //             },
-    //             onDragLeave:function(e,source){
-    //                 $(source).draggable('options').cursor='not-allowed';
-    //                 $(this).removeClass('over');
-    //                 console.log("Leave");
-    //             },
-    //             onDrop:function(e,source){
-    //                 // console.log($(this).droppable('options'));
-    //                 $(this).after(source)
-    //                 $(this).removeClass('over');
-    //                 console.log("Dropped");
-    //             }
-    //         });
-    // };
 //下面两个千万别动
     });
 });
