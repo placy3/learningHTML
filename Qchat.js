@@ -37,7 +37,7 @@ function toggleImgDrop(){
         $(".dBox").remove();
     }
 };
-
+//使虚线框可接受图片
 function makeDropBox(){
     using(JEUIplugins,function(){
         $(".dBox").droppable({
@@ -131,7 +131,9 @@ function appendDiv(id,message,time){
     var newh3 = $("<h3>"+id+"&emsp;</h3>");
     $("<span>"+time+"</span>").appendTo(newh3);
     newh3.appendTo(newDiv);
-    $("<p class='Qtext'>"+message+"</p>").appendTo(newDiv);
+    var newp = $("<p class='Qtext'>"+message+"</p>");
+    newp.css("font-size", $("#avatar").data("font-size") + "px");
+    newp.appendTo(newDiv);
     //添加在main末尾
     mainDiv.append(newDiv);
     //触发设定img为缩放的function
@@ -161,8 +163,15 @@ function insertLink(){
     }
 }
 
+function fontResize(sizeVal){
+    $("#message").css("font-size",sizeVal+"px");
+    $("#avatar").data("font-size",sizeVal);
+}
+
+
     //easyloader导入模块
 var JEUIplugins = new Array("draggable","droppable","resizable");
+//新增对话时触发
 $(document).on("newDivAdded", "#main", function() {
 using(JEUIplugins,function(){
     $("img").draggable({

@@ -36,6 +36,9 @@
         <input type="radio" name="idColour" value="blue" checked="checked">蓝色
         <input type="radio" name="idColour" value="green">绿色
         <br/>
+        字号：<input type="text" name="font_size" 
+            onchange="fontResize(this.value)">px
+        <br/>
         <input type="text" name="user_id" id="user_id" placeholder="昵称">
         <br/>
         <textarea id="message" placeholder="内容"></textarea>
@@ -52,6 +55,10 @@
     <div id="toggleButton">
         <button id="deleteMode" onclick="toggleDelete()" class="easyui-linkbutton" data-options="toggle:true">删除开关</button>
         <button id="dropMode" onclick="toggleImgDrop()" class="easyui-linkbutton" data-options="toggle:true">移图开关</button>
-    </div>      
+    </div>
+    <!-- 预留存储消息格式的地方 -->
+    <div id="avatar">
+        <p>自演乙</p>
+    </div>
     </div>
 </body>
