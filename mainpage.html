@@ -31,7 +31,6 @@
     </div>
 <!--     范例完，然后来写表单+js吧 -->
     <div id="field">
-    <form onsubmit="return submitForm()">
         <!-- 返回值为false，阻止页面刷新并手动清空表单数据 -->
         <input type="radio" name="idColour" value="blue" checked="checked">蓝色
         <input type="radio" name="idColour" value="green">绿色
@@ -42,6 +41,7 @@
         <input type="color" id="html5colorpicker" 
             onchange="fontRecolor()" value="#000000">
         <br/>
+        <form onsubmit="return submitForm()">
         <input type="text" name="user_id" id="user_id" placeholder="昵称">
         <br/>
         <textarea id="message" placeholder="内容"></textarea>
