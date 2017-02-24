@@ -76,4 +76,17 @@
         $("#avatar").data("font-color",colorval);
     }
     </script>
+    <!-- https://segmentfault.com/a/1190000007742030 -->
+    <!-- 之前放在最前面被误删了 -->
+<!--     <script type="text/javascript">
+        window.isCloseHint = true;
+    //初始化关闭
+    window.addEventListener("beforeunload", function(e) {
+    if (window.isCloseHint) {
+        var confirmationMessage = "你说你，想要逃";
+        (e || window.event).returnValue = confirmationMessage; // 兼容 Gecko + IE
+        return confirmationMessage; // 兼容 Gecko + Webkit, Safari, Chrome
+    }
+});
+    </script> -->
 </body>
