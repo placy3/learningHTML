@@ -132,7 +132,10 @@ function appendDiv(id,message,time){
     $("<span>"+time+"</span>").appendTo(newh3);
     newh3.appendTo(newDiv);
     var newp = $("<p class='Qtext'>"+message+"</p>");
-    newp.css("font-size", $("#avatar").data("font-size") + "px");
+
+    newp.css("font-size", $("#avatar").data("font-size"));
+    newp.css("color", $("#avatar").data("font-color"));
+
     newp.appendTo(newDiv);
     //添加在main末尾
     mainDiv.append(newDiv);
@@ -142,7 +145,7 @@ function appendDiv(id,message,time){
 
 //重置（表格）
 //这段出自StackOverFlow
-window.reset = function (e) {
+window.reset = function(e){
     e.wrap('<form>').closest('form').get(0).reset();
     e.unwrap();
 }
@@ -162,12 +165,6 @@ function insertLink(){
         $("#img_link").val("");
     }
 }
-
-function fontResize(sizeVal){
-    $("#message").css("font-size",sizeVal+"px");
-    $("#avatar").data("font-size",sizeVal);
-}
-
 
     //easyloader导入模块
 var JEUIplugins = new Array("draggable","droppable","resizable");

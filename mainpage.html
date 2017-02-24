@@ -38,6 +38,9 @@
         <br/>
         字号：<input type="text" name="font_size" 
             onchange="fontResize(this.value)">px
+        <!-- HTML5拾色器 -->
+        <input type="color" id="html5colorpicker" 
+            onchange="fontRecolor()" value="#000000">
         <br/>
         <input type="text" name="user_id" id="user_id" placeholder="昵称">
         <br/>
@@ -61,4 +64,16 @@
         <p>自演乙</p>
     </div>
     </div>
+    <script type="text/javascript">
+    function fontResize(sizeVal){
+        $("#message").css("font-size",sizeVal + "px");
+        $("#avatar").data("font-size",sizeVal + "px");
+    }
+    function fontRecolor(){
+        var colorval = $("#html5colorpicker").val();
+        // console.log(colorval);
+        $("#message").css("color",colorval);
+        $("#avatar").data("font-color",colorval);
+    }
+    </script>
 </body>

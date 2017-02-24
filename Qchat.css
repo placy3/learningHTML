@@ -9,19 +9,24 @@ h3{
     font-weight: normal;
     font-size: 14px;
     margin: 0;
-    color: blue;
+    color: #0669ff;
 }
 /*范例用*/
 .green{
-    color: green;
+    color: #49b583;
 }
 /*TODO: 自定义样式*/
 #main p{
     font-family: Helvetica, Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
-    padding: 5px 5px 5px 10px;
+    padding: 5px 5px 5px 15px;
     margin: auto;
     min-height: 1em;
 }
+
+#html5colorpicker{
+    width: 35px;
+}
+
 #avatar {
     float: right;
 }
