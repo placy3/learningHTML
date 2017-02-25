@@ -27,12 +27,11 @@ function toggleDelete(){
 
 function toggleImgDrop(){
     if (!$("#dropMode").linkbutton("options").selected){
-        var dottedBox = $("<div class='dBox'></div>")
+        var dottedBox = $("<div class='dBox'></div>");
         //暂时还无法做到插到文字前方
         dottedBox.insertBefore($(".Qtext"));
-        dottedBox.insertAfter($(".Qtext"));
+        dottedBox.clone().insertAfter($(".Qtext"));
         makeDropBox();
-        // console.log("droppable");
     }else{
         $(".dBox").remove();
     }
@@ -111,7 +110,7 @@ function submitForm(){
         var idColour = $("input[name=idColour]:checked").val();
         //alert(idColour);
         if (idColour == "green") {
-            $("#main>div:last>h3").css("color","green");
+            $("#main>div:last>h3").css("color","#49b583");
         }
         // $("#message").val("");
         reset($("#emo_upload"));
@@ -137,6 +136,8 @@ function appendDiv(id,message,time){
     newp.css("color", $("#avatar").data("font-color"));
 
     newp.appendTo(newDiv);
+
+    newDiv.addClass("textBlock");
     //添加在main末尾
     mainDiv.append(newDiv);
     //触发设定img为缩放的function
@@ -180,26 +181,50 @@ using(JEUIplugins,function(){
                     $(this).draggable('options').cursor='not-allowed';
                 },
                 onStopDrag:function(){
-                    $(this).draggable('options').cursor='auto';
+                    $(this).draggable('options').cursor='move';
                 }
             }).resizable({
                 maxWidth:500,
                 maxHeight:500,
             });
-
+        var indicator = $("#indicator");
+        $(".textBlock").draggable({
+                //拉动标题栏调整位置
+                handle: "h3",
+                revert: true,
+                cursor: 'move',
+                onStartDrag:function(){
+                    $(this).draggable('options').cursor='not-allowed';
+                },
+                onStopDrag:function(){
+                    $(this).draggable('options').cursor='move';
+                }
+            });
         $("p").droppable({
-                accept: "img",
+                onDragOver:function(e,source){
+                    indicator.css({
+                        display:'block',
+                        left:$(this).offset().left-10,
+                        top:$(this).offset().top
+                            + $(this).outerHeight()-5
+                    });
+                },
                 onDragEnter:function(e,source){
-                    $(source).draggable('options').cursor='auto';
                     $(this).addClass('over');
                 },
                 onDragLeave:function(e,source){
-                    $(source).draggable('options').cursor='not-allowed';
                     $(this).removeClass('over');
+                    indicator.hide();
                 },
                 onDrop:function(e,source){
-                    $(this).append(source)
+                    //图片塞在p末尾不换行
+                    if($(source).is("img")){
+                        $(this).append(source);
+                    }else{
+                        $(this).parent().after($(source));
+                    };
                     $(this).removeClass('over');
+                    indicator.hide();
                 }
             });
 

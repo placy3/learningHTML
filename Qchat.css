@@ -30,23 +30,31 @@ h3{
 #avatar {
     float: right;
 }
-
+/*拖与放*/
 img:hover{
     border-right: 1px solid gray;
     border-bottom: 1px solid gray;
 }
-
 .dBox{
     height: 20px;
     width: 160px;
     border: 2px dotted black;
     background-color: white;
 }
-
 .over{
     background:#FBEC88;
 }
+#indicator{
+    position:absolute;
+    font-weight: bold;
+    font-size:9px;
+    width:10px;
+    height:10px;
+    display:none;
+    color:red;
+}
 
+/*删除模式*/
 .cross{
     display: block;
     color: #ABABAB;
